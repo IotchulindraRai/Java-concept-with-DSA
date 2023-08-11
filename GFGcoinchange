@@ -1,0 +1,54 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GfG {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int sum = sc.nextInt();
+            int N = sc.nextInt();
+            int coins[] = new int[N];
+            for (int i = 0; i < N; i++) coins[i] = sc.nextInt();
+            Solution ob = new Solution();
+            System.out.println(ob.count(coins, N, sum));
+        }
+    }
+}
+
+
+// } Driver Code Ends
+
+class Solution {
+    public long count(int coins[], int N, int sum) {
+        long[] dp = new long[sum + 1];
+        dp[0] = 1;  // There is one way to make a sum of 0, i.e., by not using any coins
+        
+        // Loop through each coin
+        for (int coin : coins) {
+            // Update dp values for each sum from coin to target sum
+            // Starting from coin and going up to sum
+            for (int i = coin; i <= sum; i++) {
+                dp[i] += dp[i - coin];
+            }
+        }
+        
+        // Return the number of ways to make the target sum
+        return dp[sum];
+    }
+}
+
+
+/* Given an integer array coins[ ] of size N representing different denominations of currency and an integer sum, find the number of ways you can make sum by using different combinations from coins[ ].  
+Note: Assume that you have an infinite supply of each type of coin. And you can use any coin as many times as you want.
+
+Example 1:
+
+Input:
+N = 3, sum = 4
+coins = {1,2,3}
+Output: 4
+Explanation: Four Possible ways are: {1,1,1,1},{1,1,2},{2,2},{1,3}.
+*/
