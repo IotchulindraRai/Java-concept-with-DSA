@@ -1,0 +1,25 @@
+class Solution {
+public:
+    // Should return head of the modified linked list
+    Node* sortedInsert(struct Node* head, int data) {
+        Node* new_node = new Node(data);
+
+        // If the linked list is empty or the data to be inserted is smaller than the head node,
+        // make the new node the new head.
+        if (head == NULL || head->data >= data) {
+            new_node->next = head;
+            return new_node;
+        }
+
+        Node* current = head;
+        while (current->next != NULL && current->next->data < data) {
+            current = current->next;
+        }
+
+        // Insert the new node between the current node and the next node.
+        new_node->next = current->next;
+        current->next = new_node;
+
+        return head;
+    }
+};
